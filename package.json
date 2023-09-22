@@ -2,10 +2,10 @@
   "name": "npm_workspaces",
   "private": "true",
   "workspaces": [
-    "./account",
-    "./landing",
-    "./login",
-    "./shared"
+    "./src/web/account",
+    "./src/web/landing",
+    "./src/web/login",
+    "./src/web/shared"
   ],
   "scripts": {
     "build": "npm run build -w @wdid/landing -w @wdid/login -w @wdid/account",
