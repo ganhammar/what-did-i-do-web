@@ -13,8 +13,7 @@ export class StackStack extends cdk.Stack {
     this.createClientBucket('Landing', 'landing');
   }
 
-  createClientBucket(name: string, packagePath: string, s3Path?: string)
-  {
+  createClientBucket(name: string, packagePath: string, s3Path?: string) {
     var clientBucket = new Bucket(this, name, {
       accessControl: BucketAccessControl.PRIVATE,
       cors: [
@@ -22,8 +21,8 @@ export class StackStack extends cdk.Stack {
           allowedOrigins: ['*'],
           allowedMethods: [HttpMethods.GET],
           maxAge: 3000,
-        }
-      ]
+        },
+      ],
     });
     new BucketDeployment(this, `Deploy${name}`, {
       sources: [Source.asset(`./${packagePath}/build`)],

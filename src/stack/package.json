@@ -7,7 +7,12 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "lint:ci": "eslint",
+    "lint": "eslint --fix",
+    "styling": "prettier . --write",
+    "styling:ci": "prettier . --check",
+    "test": "echo tests-missing"
   },
   "devDependencies": {
     "@types/node": "10.17.27",
