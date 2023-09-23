@@ -31,12 +31,16 @@ export class WhatDidIDoWebStack extends Stack {
       resources: [`${clientBucket.bucketArn}/*`],
       principals: [new ServicePrincipal('cloudfront.amazonaws.com')],
       conditions: [
-        new CfnCondition(this, 'AllowOnlyWhatDidIDoDistribution', {
-          expression: Fn.conditionEquals(
-            'AWS:SourceArn',
-            'arn:aws:cloudfront::519157272275:distribution/EUG9JORJYTM9R'
-          ),
-        }),
+        new CfnCondition(
+          this,
+          `AllowOnlyWhatDidIDoDistributionToAccess${name}`,
+          {
+            expression: Fn.conditionEquals(
+              'AWS:SourceArn',
+              'arn:aws:cloudfront::519157272275:distribution/EUG9JORJYTM9R'
+            ),
+          }
+        ),
       ],
     });
 
