@@ -15,7 +15,6 @@ describe('WhatDidIDoWebStack', () => {
     const stack = new WhatDidIDoWebStack(app, 'MyTestStack');
     const template = Template.fromStack(stack);
 
-    template.hasResourceProperties('AWS::S3::Bucket', {
-    });
+    template.hasResourceProperties('AWS::S3::Bucket', {});
   });
 });
