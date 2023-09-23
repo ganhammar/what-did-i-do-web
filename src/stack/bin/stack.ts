@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
-import * as cdk from 'aws-cdk-lib';
-import { StackStack } from '../lib/stack-stack';
+import { App } from 'aws-cdk-lib';
+import { WhatDidIDoWebStack } from '../lib/what-did-i-do-web-stack';
 
-const app = new cdk.App();
-new StackStack(app, 'what-did-i-do-web-stack', {
+const app = new App();
+new WhatDidIDoWebStack(app, 'what-did-i-do-web-stack', {
   env: {
     region: 'eu-north-1',
   },
