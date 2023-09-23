@@ -55,9 +55,9 @@ jobs:
         with:
           name: ${{ github.run_id }}
           path: |
-            ./src/Client/Web/account/build
-            ./src/Client/Web/landing/build
-            ./src/Client/Web/login/build
+            ./src/web/account/build
+            ./src/web/landing/build
+            ./src/web/login/build
           retention-days: 1
 
   deploy:
