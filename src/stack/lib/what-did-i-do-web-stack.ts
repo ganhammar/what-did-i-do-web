@@ -22,7 +22,7 @@ export class WhatDidIDoWebStack extends Stack {
           maxAge: 3000,
         },
       ],
-      bucketName: name.toLowerCase(),
+      bucketName: `what-did-i-do-web-${name.toLowerCase()}`,
     });
     new BucketDeployment(this, `Deploy${name}`, {
       sources: [Source.asset(`../../${packagePath}/build`)],
