@@ -14,6 +14,7 @@ describe('WhatDidIDoWebStack', () => {
 
       template.hasResourceProperties('AWS::S3::Bucket', {
         AccessControl: 'Private',
+        BucketName: name.toLowerCase(),
       });
 
       const bucket = stack.node.tryFindChild(name);
