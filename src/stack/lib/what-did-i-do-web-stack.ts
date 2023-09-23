@@ -30,18 +30,11 @@ export class WhatDidIDoWebStack extends Stack {
       actions: ['s3:GetObject'],
       resources: [`${clientBucket.bucketArn}/*`],
       principals: [new ServicePrincipal('cloudfront.amazonaws.com')],
-      conditions: [
-        new CfnCondition(
-          this,
-          `AllowOnlyWhatDidIDoDistributionToAccess${name}`,
-          {
-            expression: Fn.conditionEquals(
-              'AWS:SourceArn',
-              'arn:aws:cloudfront::519157272275:distribution/EUG9JORJYTM9R'
-            ),
-          }
-        ),
-      ],
+      conditions: {
+        'StringEquals': {
+          'AWS:SourceArn': 'arn:aws:cloudfront::519157272275:distribution/EUG9JORJYTM9R',
+        },
+      },
     });
 
     clientBucket.addToResourcePolicy(policyStatement);
