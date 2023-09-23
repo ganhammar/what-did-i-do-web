@@ -1,4 +1,5 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { CfnCondition, Fn, Stack, StackProps } from 'aws-cdk-lib';
+import { PolicyStatement, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { Bucket, BucketAccessControl, HttpMethods } from 'aws-cdk-lib/aws-s3';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { Construct } from 'constructs';
@@ -24,6 +25,23 @@ export class WhatDidIDoWebStack extends Stack {
       ],
       bucketName: `what-did-i-do-web-${name.toLowerCase()}`,
     });
+
+    var policyStatement = new PolicyStatement({
+      actions: ['s3:GetObject'],
+      resources: [`${clientBucket.bucketArn}/*`],
+      principals: [new ServicePrincipal('cloudfront.amazonaws.com')],
+      conditions: [
+        new CfnCondition(this, 'AllowOnlyWhatDidIDoDistribution', {
+          expression: Fn.conditionEquals(
+            'AWS:SourceArn',
+            'arn:aws:cloudfront::519157272275:distribution/EUG9JORJYTM9R'
+          ),
+        }),
+      ],
+    });
+
+    clientBucket.addToResourcePolicy(policyStatement);
+
     new BucketDeployment(this, `Deploy${name}`, {
       sources: [Source.asset(`../../${packagePath}/build`)],
       destinationBucket: clientBucket,
