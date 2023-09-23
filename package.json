@@ -5,7 +5,8 @@
     "./src/web/account",
     "./src/web/landing",
     "./src/web/login",
-    "./src/web/shared"
+    "./src/web/shared",
+    "./src/stack"
   ],
   "scripts": {
     "build": "npm run build -w @wdid/landing -w @wdid/login -w @wdid/account",
@@ -13,7 +14,9 @@
     "lint:ci": "npm run lint:ci --ws",
     "test": "npm run test --ws",
     "styling": "npm run styling --ws",
-    "styling:ci": "npm run styling:ci --ws"
+    "styling:ci": "npm run styling:ci --ws",
+    "bootstrap": "npm run cdk bootstrap -w @wdid/stack",
+    "deploy": "npm run cdk deploy -w @wdid/stack -- --require-approval never --all"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
