@@ -24,7 +24,7 @@ export class WhatDidIDoWebStack extends Stack {
       ],
     });
     new BucketDeployment(this, `Deploy${name}`, {
-      sources: [Source.asset(`./${packagePath}/build`)],
+      sources: [Source.asset(`../../${packagePath}/build`)],
       destinationBucket: clientBucket,
       destinationKeyPrefix: s3Path,
     });

@@ -12,7 +12,7 @@
     "lint": "eslint --fix",
     "styling": "prettier . --write",
     "styling:ci": "prettier . --check",
-    "test": "echo tests-missing"
+    "test": "jest"
   },
   "devDependencies": {
     "@types/node": "10.17.27",
