@@ -111,6 +111,7 @@ const ActualSelect = styled.select`
   width: 0;
   height: 0;
   overflow: hidden;
+  visibility: hidden;
 `;
 const Value = styled.div<{
   hasTags: boolean;
