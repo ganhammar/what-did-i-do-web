@@ -33,7 +33,7 @@ export class WhatDidIDoWebStack extends Stack {
       conditions: {
         StringEquals: {
           'AWS:SourceArn':
-            'arn:aws:cloudfront::519157272275:distribution/EUG9JORJYTM9R',
+            'arn:aws:cloudfront::519157272275:distribution/E2L0DHX73AANES',
         },
       },
     });
