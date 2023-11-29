@@ -34,7 +34,8 @@ const NavState = styled.div`
   position: relative;
   top: 19px;
   left: 10px;
-  &:before, &:after {
+  &:before,
+  &:after {
     display: block;
     content: '';
     width: 20px;
