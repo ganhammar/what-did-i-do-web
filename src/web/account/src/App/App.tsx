@@ -9,6 +9,7 @@ import { IntlProvider } from 'react-intl';
 export function App() {
   const links = [
     { to: '/account/dashboard', title: 'Dashboard', serverSide: false },
+    { to: '/login/edit', title: 'Edit Profile', serverSide: false },
   ];
 
   return (

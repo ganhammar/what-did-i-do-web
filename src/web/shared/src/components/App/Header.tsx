@@ -1,31 +1,69 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { Modal } from '../Modal';
 
 const Wrapper = styled.header`
   text-align: center;
+  position: relative;
 `;
 const Title = styled.h1`
   font-family: Pacifico;
+  margin: 30px 0;
+`;
+const NavWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: ${({ theme }) => theme.palette.primary.main};
+  box-shadow: ${({ theme }) => theme.shadows[1]};
+  &:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3) inset;
+    opacity: 0.8;
+    cursor: pointer;
+  }
+`;
+const NavState = styled.div`
+  width: 20px;
+  height: 3px;
+  border-radius: 1.5px;
+  background-color: ${({ theme }) => theme.palette.background.main};
+  position: relative;
+  top: 19px;
+  left: 10px;
+  &:before, &:after {
+    display: block;
+    content: '';
+    width: 20px;
+    height: 3px;
+    border-radius: 1.5px;
+    background-color: ${({ theme }) => theme.palette.background.main};
+    position: relative;
+    top: -11px;
+  }
+  &:before {
+    top: 8px;
+  }
 `;
 const Nav = styled.nav`
-  margin: 2rem 0;
-  padding: 0.5rem 0;
-  border-top: 1px solid ${({ theme }) => theme.palette.divider.main};
-  border-bottom: 1px solid ${({ theme }) => theme.palette.divider.main};
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 `;
 const LinkStyle = css`
   text-decoration: none;
-  margin: 0 ${({ theme }) => theme.spacing.s};
-  &:last-child {
-    position: absolute;
-    right: ${({ theme }) => theme.spacing.s};
-  }
+  padding: ${({ theme }) => theme.spacing.xs} 0;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.divider.main};
+  color: ${({ theme }) => theme.palette.background.contrastText};
   &:hover,
   &.active {
     font-weight: bold;
-    color: ${({ theme }) => theme.palette.primary.main};
+  }
+  &:last-child {
+    border-bottom: none;
   }
 `;
 const StyledNavLink = styled(NavLink)`
@@ -41,42 +79,50 @@ interface Props {
 }
 
 export function Header({ links, isLoggedIn }: Props) {
+  const [navIsOpen, setNavIsOpen] = useState(false);
   const { pathname } = useLocation();
+
+  const toggle = () => setNavIsOpen(!navIsOpen);
 
   return (
     <Wrapper>
+      <NavWrapper onClick={toggle}>
+        <NavState />
+      </NavWrapper>
       <Title>What Did I Do?</Title>
-      <Nav>
-        {links.map(({ to, title, serverSide }) => (
-          <Fragment key={to}>
-            {serverSide && (
-              <StyledALink
-                href={to}
-                className={pathname.startsWith(to) ? 'active' : ''}
-              >
-                {title}
-              </StyledALink>
-            )}
-            {!serverSide && (
-              <StyledNavLink
-                className={(isActive) => (isActive ? 'active' : '')}
-                to={to}
-              >
-                {title}
-              </StyledNavLink>
-            )}
-          </Fragment>
-        ))}
-        {!isLoggedIn && (
-          <StyledALink
-            href="/login"
-            className={pathname === '/login' ? 'active' : ''}
-          >
-            Login
-          </StyledALink>
-        )}
-        {isLoggedIn && <StyledALink href="/login/logout">Logout</StyledALink>}
-      </Nav>
+      <Modal isOpen={navIsOpen} onClose={toggle}>
+        <Nav>
+          {links.map(({ to, title, serverSide }) => (
+            <Fragment key={to}>
+              {serverSide && (
+                <StyledALink
+                  href={to}
+                  className={pathname.startsWith(to) ? 'active' : ''}
+                >
+                  {title}
+                </StyledALink>
+              )}
+              {!serverSide && (
+                <StyledNavLink
+                  className={(isActive) => (isActive ? 'active' : '')}
+                  to={to}
+                >
+                  {title}
+                </StyledNavLink>
+              )}
+            </Fragment>
+          ))}
+          {!isLoggedIn && (
+            <StyledALink
+              href="/login"
+              className={pathname === '/login' ? 'active' : ''}
+            >
+              Login
+            </StyledALink>
+          )}
+          {isLoggedIn && <StyledALink href="/login/logout">Logout</StyledALink>}
+        </Nav>
+      </Modal>
     </Wrapper>
   );
 }
