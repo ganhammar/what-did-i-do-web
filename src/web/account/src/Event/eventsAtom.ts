@@ -20,6 +20,10 @@ export const eventsAtom = atom({
 
       const eventService = new EventService(accessToken);
 
+      if (!parameters.fromDate || !parameters.toDate) {
+        return [];
+      }
+
       return await eventService.list({
         accountId: account.id,
         ...parameters,
