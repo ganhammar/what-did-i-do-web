@@ -1,3 +1,4 @@
+import React from 'react';
 import { Fragment, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
@@ -56,12 +57,13 @@ const Nav = styled.nav`
 `;
 const LinkStyle = css`
   text-decoration: none;
-  padding: ${({ theme }) => theme.spacing.xs} 0;
+  padding: ${({ theme }) => theme.spacing.m} 0;
   border-bottom: 1px solid ${({ theme }) => theme.palette.divider.main};
   color: ${({ theme }) => theme.palette.background.contrastText};
   &:hover,
   &.active {
-    font-weight: bold;
+    background-color: ${({ theme }) => theme.palette.background.main};
+    color: ${({ theme }) => theme.palette.background.contrastText};
   }
   &:last-child {
     border-bottom: none;
@@ -91,7 +93,7 @@ export function Header({ links, isLoggedIn }: Props) {
         <NavState />
       </NavWrapper>
       <Title>What Did I Do?</Title>
-      <Modal isOpen={navIsOpen} onClose={toggle}>
+      <Modal isOpen={navIsOpen} onClose={toggle} noPadding>
         <Nav>
           {links.map(({ to, title, serverSide }) => (
             <Fragment key={to}>

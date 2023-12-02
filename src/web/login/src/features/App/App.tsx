@@ -1,3 +1,4 @@
+import React from 'react';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -14,6 +15,7 @@ function AppLayout() {
   if (user) {
     links = [
       { to: '/account/dashboard', title: 'Dashboard', serverSide: true },
+      { to: '/login/user', title: 'Edit Profile', serverSide: false },
     ];
   }
 

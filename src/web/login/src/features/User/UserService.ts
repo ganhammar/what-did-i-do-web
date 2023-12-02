@@ -6,6 +6,11 @@ export interface RegisterParamters {
   returnUrl: string;
 }
 
+export interface EditParamters {
+  email: string;
+  password: string;
+}
+
 export interface LoginParameters {
   email: string;
   userName?: string;
@@ -25,6 +30,10 @@ export class UserService extends FetchBase {
 
   async register(data: RegisterParamters) {
     return await this.post<User>(`${this.baseUrl}/register`, data);
+  }
+
+  async edit(data: EditParamters) {
+    return await this.post<User>(`${this.baseUrl}/edit`, data);
   }
 
   async login(data: LoginParameters) {

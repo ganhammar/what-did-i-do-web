@@ -6,11 +6,13 @@ interface ModalProps {
   isOpen: boolean;
   children: ReactNode;
   onClose: () => void;
+  noPadding?: boolean;
 }
 
 interface ModalStyleProps {
   isOpen: boolean;
   isClosing: boolean;
+  noPadding?: boolean;
 }
 
 const fadeIn = keyframes`
@@ -92,12 +94,13 @@ const Window = styled.div<ModalStyleProps>`
   left: 50%;
   margin-left: -300px;
   width: 600px;
-  min-height: 200px;
+  min-height: 100px;
   background-color: ${({ theme }) => theme.palette.paper.main};
   color: ${({ theme }) => theme.palette.paper.contrastText};
   border-radius: 20px;
   box-shadow: ${({ theme }) => theme.shadows[3]};
-  padding: ${({ theme }) => theme.spacing.l};
+  padding: ${({ theme, noPadding }) => (noPadding ? 0 : theme.spacing.l)};
+  overflow: hidden;
   opacity: 0;
   ${({ isOpen }) =>
     isOpen &&
@@ -111,7 +114,7 @@ const Window = styled.div<ModalStyleProps>`
     `}
 `;
 
-export const Modal = ({ isOpen, children, onClose }: ModalProps) => {
+export const Modal = ({ isOpen, children, onClose, noPadding }: ModalProps) => {
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
@@ -124,13 +127,14 @@ export const Modal = ({ isOpen, children, onClose }: ModalProps) => {
   }, [isClosing, onClose]);
 
   return createPortal(
-    <Wrapper isOpen={isOpen} isClosing={isClosing}>
+    <Wrapper isOpen={isOpen} isClosing={isClosing} noPadding={noPadding}>
       <Overlay
         isOpen={isOpen}
         isClosing={isClosing}
         onClick={() => setIsClosing(true)}
+        noPadding={noPadding}
       ></Overlay>
-      <Window isOpen={isOpen} isClosing={isClosing}>
+      <Window isOpen={isOpen} isClosing={isClosing} noPadding={noPadding}>
         {isOpen && children}
       </Window>
     </Wrapper>,
