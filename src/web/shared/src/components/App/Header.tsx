@@ -24,7 +24,10 @@ const Title = styled.h1`
     margin: 60px 0;
   }
 `;
-const NavWrapper = styled.div`
+interface NavStateProps {
+  isOpen: boolean;
+}
+const NavWrapper = styled.div<NavStateProps>`
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -38,6 +41,21 @@ const NavWrapper = styled.div`
     opacity: 0.8;
     cursor: pointer;
   }
+  ${({ isOpen }) =>
+    isOpen &&
+    css`
+      div {
+        background-color: transparent;
+        &:before {
+          top: 0;
+          transform: rotate(45deg);
+        }
+        &:after {
+          top: -3px;
+          transform: rotate(-45deg);
+        }
+      }
+    `}
 `;
 const NavState = styled.div`
   width: 20px;
@@ -57,6 +75,9 @@ const NavState = styled.div`
     background-color: ${({ theme }) => theme.palette.background.main};
     position: relative;
     top: -11px;
+    transition:
+      top 0.3s,
+      transform 0.3s;
   }
   &:before {
     top: 8px;
@@ -101,7 +122,7 @@ export function Header({ links, isLoggedIn }: Props) {
 
   return (
     <Wrapper>
-      <NavWrapper onClick={toggle}>
+      <NavWrapper onClick={toggle} isOpen={navIsOpen}>
         <NavState />
       </NavWrapper>
       <Title>What Did I Do?</Title>
