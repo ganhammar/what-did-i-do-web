@@ -1,4 +1,10 @@
-import { Button, Header, TextInput, isEmail, useAsyncError } from '@wdid/shared';
+import {
+  Button,
+  Header,
+  TextInput,
+  isEmail,
+  useAsyncError,
+} from '@wdid/shared';
 import useUser from '../Auth/currentUserSelector';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
