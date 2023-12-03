@@ -11,6 +11,18 @@ const Wrapper = styled.header`
 const Title = styled.h1`
   font-family: Pacifico;
   margin: 30px 0;
+  @media (max-width: 760px) {
+    font-size: 3rem;
+    margin: 40px 0;
+  }
+  @media (max-width: 640px) {
+    font-size: 2.5rem;
+    margin: 50px 0;
+  }
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    margin: 60px 0;
+  }
 `;
 const NavWrapper = styled.div`
   width: 40px;

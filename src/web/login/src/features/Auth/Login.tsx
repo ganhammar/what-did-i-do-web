@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import {
   Button,
   Checkbox,
+  Header,
   TextInput,
   isEmail,
   useAsyncError,
@@ -11,9 +12,16 @@ import {
 import { UserService } from '../User/UserService';
 import useUser from './currentUserSelector';
 
+const Wrapper = styled.div`
+  margin: ${({ theme }) => `${theme.spacing.xl} 0`};
+`;
 const Form = styled.form`
+  background-color: ${({ theme }) => theme.palette.paper.main};
+  color: ${({ theme }) => theme.palette.paper.contrastText};
+  border-radius: ${({ theme }) => theme.borderRadius};
   display: flex;
   flex-direction: column;
+  padding: ${({ theme }) => theme.spacing.m};
 `;
 const Submit = styled(Button)`
   margin-left: auto;
@@ -65,36 +73,39 @@ export function Login() {
   }, [user]);
 
   return (
-    <Form>
-      <TextInput
-        title="Email"
-        type="text"
-        value={email}
-        onChange={setEmail}
-        hasError={Boolean(email) && !isEmail(email)}
-        errorTip="Must be a valid email address"
-      />
-      <TextInput
-        title="Password"
-        type="password"
-        value={password}
-        onChange={setPassword}
-      />
-      <Checkbox
-        title="Remember me"
-        onChange={() => setRememberMe(!rememberMe)}
-        isChecked={rememberMe}
-        position="right"
-      />
-      <Submit
-        color="success"
-        onClick={submit}
-        isDisabled={!isEmail(email) || !Boolean(password)}
-        isLoading={isLoading}
-        isAsync
-      >
-        Login
-      </Submit>
-    </Form>
+    <Wrapper>
+      <Header size="H3">Login</Header>
+      <Form>
+        <TextInput
+          title="Email"
+          type="text"
+          value={email}
+          onChange={setEmail}
+          hasError={Boolean(email) && !isEmail(email)}
+          errorTip="Must be a valid email address"
+        />
+        <TextInput
+          title="Password"
+          type="password"
+          value={password}
+          onChange={setPassword}
+        />
+        <Checkbox
+          title="Remember me"
+          onChange={() => setRememberMe(!rememberMe)}
+          isChecked={rememberMe}
+          position="right"
+        />
+        <Submit
+          color="success"
+          onClick={submit}
+          isDisabled={!isEmail(email) || !Boolean(password)}
+          isLoading={isLoading}
+          isAsync
+        >
+          Login
+        </Submit>
+      </Form>
+    </Wrapper>
   );
 }
