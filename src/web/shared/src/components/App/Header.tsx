@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Fragment, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { Modal } from '../Modal';
 
 const Wrapper = styled.header`
@@ -26,7 +26,55 @@ const Title = styled.h1`
 `;
 interface NavStateProps {
   isOpen: boolean;
+  isClosing?: boolean;
 }
+
+const beforeToX = keyframes`
+  50% {
+    top: 0;
+  }
+  100% {
+    top: 0;
+    transform: rotate(45deg);
+  }
+`;
+
+const afterToX = keyframes`
+  50% {
+    top: -3px;
+  }
+  100% {
+    top: -3px;
+    transform: rotate(-45deg);
+  }
+`;
+
+const beforeFromX = keyframes`
+  0% {
+    top: 0;
+    transform: rotate(45deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  100% {
+    top: 8px;
+  }
+`;
+
+const afterFromX = keyframes`
+  0% {
+    top: -3px;
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  100% {
+    top: -11px;
+  }
+`;
+
 const NavWrapper = styled.div<NavStateProps>`
   width: 40px;
   height: 40px;
@@ -47,12 +95,22 @@ const NavWrapper = styled.div<NavStateProps>`
       div {
         background-color: transparent;
         &:before {
-          top: 0;
-          transform: rotate(45deg);
+          animation: ${beforeToX} 0.6s forwards;
         }
         &:after {
-          top: -3px;
-          transform: rotate(-45deg);
+          animation: ${afterToX} 0.6s forwards;
+        }
+      }
+    `}
+  ${({ isClosing }) =>
+    isClosing &&
+    css`
+      div {
+        &:before {
+          animation: ${beforeFromX} 0.6s forwards;
+        }
+        &:after {
+          animation: ${afterFromX} 0.6s forwards;
         }
       }
     `}
@@ -116,13 +174,22 @@ interface Props {
 
 export function Header({ links, isLoggedIn }: Props) {
   const [navIsOpen, setNavIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState<boolean | undefined>(undefined);
   const { pathname } = useLocation();
 
   const toggle = () => setNavIsOpen(!navIsOpen);
 
+  useEffect(() => {
+    if (navIsOpen) {
+      setIsClosing(false);
+    } else if (isClosing === false && !navIsOpen) {
+      setIsClosing(true);
+    }
+  }, [navIsOpen, isClosing]);
+
   return (
     <Wrapper>
-      <NavWrapper onClick={toggle} isOpen={navIsOpen}>
+      <NavWrapper onClick={toggle} isOpen={navIsOpen} isClosing={isClosing}>
         <NavState />
       </NavWrapper>
       <Title>What Did I Do?</Title>
