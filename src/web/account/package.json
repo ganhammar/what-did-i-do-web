@@ -31,7 +31,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-datepicker": "^4.15.0",
+    "@types/react-datepicker": "^4.19.4",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1",
     "recoil-mock": "^0.1.4"
@@ -39,7 +39,7 @@
   "dependencies": {
     "date-fns": "^2.30.0",
     "oidc-client-ts": "^2.2.4",
-    "react-datepicker": "^4.24.0"
+    "react-datepicker": "^4.25.0"
   },
   "jest": {
     "moduleNameMapper": {
