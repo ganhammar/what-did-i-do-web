@@ -1,10 +1,13 @@
-import { ReactElement, useEffect, useMemo } from 'react';
+import React, { ReactElement, useEffect, useMemo } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import { Loader } from '@wdid/shared';
 import { UserService } from '../User';
 import { Login } from '.';
 import currentUserSelector from './currentUserSelector';
+import { ForgotPassword } from './ForgotPassword';
+import { ResetPassword } from './ResetPassword';
+import { CheckInbox } from './CheckInbox';
 
 interface AuthProps {
   children: ReactElement;
@@ -53,6 +56,9 @@ export function Auth({ children }: AuthProps) {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/login/logout" element={<Logout />} />
+      <Route path="/login/forgot-password" element={<ForgotPassword />} />
+      <Route path="/login/forgot-password/sent" element={<CheckInbox />} />
+      <Route path="/login/reset-password" element={<ResetPassword />} />
       <Route
         path="*"
         element={<RenderIfLoggedIn>{children}</RenderIfLoggedIn>}

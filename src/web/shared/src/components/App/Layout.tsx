@@ -28,6 +28,12 @@ const GlobalStyle = createGlobalStyle`
   h3 {
     font-size: ${({ theme }) => theme.typography.h3};
   }
+  a {
+    color: ${({ theme }) => theme.palette.primary.main};
+    &:hover {
+      text-decoration: none;
+    }
+  }
 `;
 
 const App = styled.div`

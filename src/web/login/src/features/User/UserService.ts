@@ -18,6 +18,17 @@ export interface LoginParameters {
   rememberMe: boolean;
 }
 
+export interface ForgotPasswordParameters {
+  email: string;
+  resetUrl: string;
+}
+
+export interface ResetPasswordParameters {
+  password: string;
+  userId: string;
+  token: string;
+}
+
 export interface LoginResult {
   succeeded: boolean;
   isLockedOut: boolean;
@@ -38,6 +49,14 @@ export class UserService extends FetchBase {
 
   async login(data: LoginParameters) {
     return await this.post<LoginResult>(`${this.baseUrl}/login`, data);
+  }
+
+  async forgotPassword(data: ForgotPasswordParameters) {
+    return await this.post(`${this.baseUrl}/forgot`, data);
+  }
+
+  async resetPassword(data: ResetPasswordParameters) {
+    return await this.post(`${this.baseUrl}/reset`, data);
   }
 
   async user() {
