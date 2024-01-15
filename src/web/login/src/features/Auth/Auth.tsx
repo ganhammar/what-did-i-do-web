@@ -8,6 +8,8 @@ import currentUserSelector from './currentUserSelector';
 import { ForgotPassword } from './ForgotPassword';
 import { ResetPassword } from './ResetPassword';
 import { CheckInbox } from './CheckInbox';
+import { SelectTwoFactorProvider } from './SelectTwoFactorProvider';
+import { VerifyCode } from './VerifyCode';
 
 interface AuthProps {
   children: ReactElement;
@@ -58,7 +60,9 @@ export function Auth({ children }: AuthProps) {
       <Route path="/login/logout" element={<Logout />} />
       <Route path="/login/forgot-password" element={<ForgotPassword />} />
       <Route path="/login/forgot-password/sent" element={<CheckInbox />} />
+      <Route path="/login/select-two-factor-provider" element={<SelectTwoFactorProvider />} />
       <Route path="/login/reset-password" element={<ResetPassword />} />
+      <Route path="/login/verify-code" element={<VerifyCode />} />
       <Route
         path="*"
         element={<RenderIfLoggedIn>{children}</RenderIfLoggedIn>}

@@ -29,6 +29,17 @@ export interface ResetPasswordParameters {
   token: string;
 }
 
+export interface SendCodeParameters {
+  provider: string;
+}
+
+export interface VerifyCodeParameters {
+  provider: string;
+  code: string;
+  rememberBrowser: boolean;
+  rememberMe: boolean;
+}
+
 export interface LoginResult {
   succeeded: boolean;
   isLockedOut: boolean;
@@ -57,6 +68,18 @@ export class UserService extends FetchBase {
 
   async resetPassword(data: ResetPasswordParameters) {
     return await this.post(`${this.baseUrl}/reset`, data);
+  }
+
+  async getTwoFactorProviders() {
+    return await this.get<string[]>(`${this.baseUrl}/twofactorproviders`);
+  };
+
+  async sendCode(data: SendCodeParameters) {
+    return await this.post(`${this.baseUrl}/sendcode`, data);
+  }
+
+  async verifyCode(data: VerifyCodeParameters) {
+    return await this.post(`${this.baseUrl}/verifycode`, data);
   }
 
   async user() {

@@ -9,9 +9,12 @@ import {
   isEmail,
   useAsyncError,
 } from '@wdid/shared';
+import { useNavigate } from 'react-router-dom';
 import { UserService } from '../User/UserService';
 import useUser from './currentUserSelector';
 import { Link } from 'react-router-dom';
+
+const SELECT_TWO_FACTOR_PROVIDER_URL = '/login/select-two-factor-provider';
 
 const Wrapper = styled.div`
   margin: ${({ theme }) => `${theme.spacing.xl} 0`};
@@ -34,6 +37,7 @@ const ButtonWrapper = styled.div`
 
 export function Login() {
   const throwError = useAsyncError();
+  const navigate = useNavigate();
   const user = useRecoilValue(useUser);
   const refresh = useRecoilRefresher_UNSTABLE(useUser);
   const [email, setEmail] = useState('');
@@ -62,6 +66,8 @@ export function Login() {
         } else {
           refresh();
         }
+      } else if (response.result?.requiresTwoFactor) {
+        navigate(`${SELECT_TWO_FACTOR_PROVIDER_URL}?rememberMe=${rememberMe}&returnUrl=${returnUrl}`);
       } else {
         console.log(response);
       }
