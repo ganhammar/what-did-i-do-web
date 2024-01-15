@@ -22,7 +22,8 @@ const Form = styled.form`
 const SubHeader = styled.p`
   border-bottom: 2px solid ${({ theme }) => theme.palette.background.main};
   margin: 0 ${({ theme }) => `-${theme.spacing.m}`};
-  padding: ${({ theme }) => `0 ${theme.spacing.m} ${theme.spacing.m} ${theme.spacing.m}`};
+  padding: ${({ theme }) =>
+    `0 ${theme.spacing.m} ${theme.spacing.m} ${theme.spacing.m}`};
 `;
 const Provider = styled.div`
   margin: 0 ${({ theme }) => `-${theme.spacing.m}`};
@@ -74,12 +75,14 @@ export const SelectTwoFactorProvider = () => {
         const rememberMe = params.get('rememberMe');
         const returnUrl = params.get('returnUrl');
 
-        navigate(`${VERIFY_URL}?rememberMe=${rememberMe}&provider=${selectedProvider}&returnUrl=${returnUrl}`);
+        navigate(
+          `${VERIFY_URL}?rememberMe=${rememberMe}&provider=${selectedProvider}&returnUrl=${returnUrl}`
+        );
       } else {
         console.log(response);
       }
 
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (error) {
       throwError(error);
     }

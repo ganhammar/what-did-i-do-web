@@ -72,7 +72,7 @@ export class UserService extends FetchBase {
 
   async getTwoFactorProviders() {
     return await this.get<string[]>(`${this.baseUrl}/twofactorproviders`);
-  };
+  }
 
   async sendCode(data: SendCodeParameters) {
     return await this.post(`${this.baseUrl}/sendcode`, data);

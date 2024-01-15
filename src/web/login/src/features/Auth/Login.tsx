@@ -67,7 +67,9 @@ export function Login() {
           refresh();
         }
       } else if (response.result?.requiresTwoFactor) {
-        navigate(`${SELECT_TWO_FACTOR_PROVIDER_URL}?rememberMe=${rememberMe}&returnUrl=${returnUrl}`);
+        navigate(
+          `${SELECT_TWO_FACTOR_PROVIDER_URL}?rememberMe=${rememberMe}&returnUrl=${returnUrl}`
+        );
       } else {
         console.log(response);
       }
