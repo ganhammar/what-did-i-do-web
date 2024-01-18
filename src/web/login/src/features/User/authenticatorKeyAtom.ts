@@ -1,13 +1,13 @@
 import { atom, selector } from 'recoil';
 import { UserService } from '../User';
 
-export const twoFactorProvidersAtom = atom({
-  key: 'twoFactorProvidersAtom',
+export const authenticatorKeyAtom = atom({
+  key: 'authenticatorKeyAtom',
   default: selector({
-    key: 'twoFactorProvidersAtom/Default',
+    key: 'authenticatorKeyAtom/Default',
     get: async () => {
       const userService = new UserService();
-      return await userService.getTwoFactorProviders();
+      return await userService.authenticatorKey();
     },
   }),
 });

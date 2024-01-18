@@ -10,6 +10,8 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { UserService } from './UserService';
+import { Link } from 'react-router-dom';
+import { twoFactorProvidersAtom } from '../Auth/twoFactorProvidersAtom';
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -24,12 +26,35 @@ const Form = styled.form`
   flex-direction: column;
   padding: ${({ theme }) => theme.spacing.m};
 `;
+const AuthenticatorWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 ${({ theme }) => theme.spacing.xs} 1.8rem
+    ${({ theme }) => theme.spacing.xs};
+`;
+const Status = styled.span<{ connected: boolean }>`
+  border-radius: 14px;
+  border: 1px solid
+    ${({ theme, connected }) =>
+      connected ? theme.palette.success.main : theme.palette.warning.main};
+  color: ${({ theme, connected }) =>
+    connected ? theme.palette.success.main : theme.palette.warning.main};
+  font-size: 0.8rem;
+  padding: 0 ${({ theme }) => theme.spacing.xs};
+  margin: 0 ${({ theme }) => theme.spacing.xs};
+`;
+const Connect = styled(Link)`
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+`;
 const Submit = styled(Button)`
   margin-left: auto;
 `;
 
 export function Edit() {
   const throwError = useAsyncError();
+  const providers = useRecoilValue(twoFactorProvidersAtom);
   const user = useRecoilValue(useUser);
   const [email, setEmail] = React.useState<string>(user.email);
   const [password, setPassword] = React.useState<string>('');
@@ -71,6 +96,17 @@ export function Edit() {
           hasError={Boolean(password) && password.length < MIN_PASSWORD_LENGTH}
           errorTip="At least eight characters"
         />
+        <AuthenticatorWrapper>
+          <span>Authenticator App</span>
+          <Status
+            connected={providers.result?.includes('Authenticator') ?? false}
+          >
+            {providers.result?.includes('Authenticator') ? "Configured" : "Not Configured"}
+          </Status>
+          <Connect to="/login/user/connect-authenticator-app">
+            {providers.result?.includes('Authenticator') ? "Change" : "Configure"}
+          </Connect>
+        </AuthenticatorWrapper>
         <Submit
           color="success"
           onClick={submit}

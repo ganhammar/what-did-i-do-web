@@ -47,6 +47,10 @@ export interface LoginResult {
   requiresTwoFactor: boolean;
 }
 
+export interface AuthenticatorKeyResult {
+  key: string;
+}
+
 export class UserService extends FetchBase {
   baseUrl = '/api/login/user';
 
@@ -80,6 +84,10 @@ export class UserService extends FetchBase {
 
   async verifyCode(data: VerifyCodeParameters) {
     return await this.post(`${this.baseUrl}/verifycode`, data);
+  }
+
+  async authenticatorKey() {
+    return await this.get<AuthenticatorKeyResult>(`${this.baseUrl}/authenticatorkey`);
   }
 
   async user() {

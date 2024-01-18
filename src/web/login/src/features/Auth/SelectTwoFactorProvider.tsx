@@ -65,12 +65,20 @@ export const SelectTwoFactorProvider = () => {
   const submit = async () => {
     try {
       setIsLoading(true);
+      let success = true;
 
-      const response = await userService.sendCode({
-        provider: selectedProvider,
-      });
+      if (selectedProvider === 'Email') {
+        const response = await userService.sendCode({
+          provider: selectedProvider,
+        });
+        success = response.success;
 
-      if (response.success) {
+        if (!success) {
+          console.log(response);
+        }
+      }
+
+      if (success) {
         const params = new URLSearchParams(window.location.search);
         const rememberMe = params.get('rememberMe');
         const returnUrl = params.get('returnUrl');
@@ -78,8 +86,6 @@ export const SelectTwoFactorProvider = () => {
         navigate(
           `${VERIFY_URL}?rememberMe=${rememberMe}&provider=${selectedProvider}&returnUrl=${returnUrl}`
         );
-      } else {
-        console.log(response);
       }
 
       setIsLoading(false);
@@ -107,7 +113,7 @@ export const SelectTwoFactorProvider = () => {
           </Provider>
         ))}
         <ButtonWrapper>
-          <Link to="/login">Login</Link>
+          <Link to="/login">Back to Login</Link>
           <Button
             color="success"
             onClick={submit}
