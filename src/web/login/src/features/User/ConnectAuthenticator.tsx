@@ -27,12 +27,12 @@ export const ConnectAuthenticator = () => {
         color: {
           dark: '#000',
           light: '#f2f2f2',
-        }
+        },
       })
-        .then(url => {
+        .then((url) => {
           setQrCodeUrl(url);
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
         });
     }
@@ -46,7 +46,9 @@ export const ConnectAuthenticator = () => {
           Scan the QR code below with your authenticator app to connect it to
           your account.
         </p>
-        {qrCodeUrl && <img src={qrCodeUrl} alt="QR Code" width="300" height="300" />}
+        {qrCodeUrl && (
+          <img src={qrCodeUrl} alt="QR Code" width="300" height="300" />
+        )}
         <p>
           If you can't scan the QR code, you can manually enter the code into
           your authenticator app.

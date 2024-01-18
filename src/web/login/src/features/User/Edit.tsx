@@ -101,10 +101,14 @@ export function Edit() {
           <Status
             connected={providers.result?.includes('Authenticator') ?? false}
           >
-            {providers.result?.includes('Authenticator') ? "Configured" : "Not Configured"}
+            {providers.result?.includes('Authenticator')
+              ? 'Configured'
+              : 'Not Configured'}
           </Status>
           <Connect to="/login/user/connect-authenticator-app">
-            {providers.result?.includes('Authenticator') ? "Change" : "Configure"}
+            {providers.result?.includes('Authenticator')
+              ? 'Change'
+              : 'Configure'}
           </Connect>
         </AuthenticatorWrapper>
         <Submit

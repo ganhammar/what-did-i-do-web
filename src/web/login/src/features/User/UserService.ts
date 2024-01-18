@@ -87,7 +87,9 @@ export class UserService extends FetchBase {
   }
 
   async authenticatorKey() {
-    return await this.get<AuthenticatorKeyResult>(`${this.baseUrl}/authenticatorkey`);
+    return await this.get<AuthenticatorKeyResult>(
+      `${this.baseUrl}/authenticatorkey`
+    );
   }
 
   async user() {
