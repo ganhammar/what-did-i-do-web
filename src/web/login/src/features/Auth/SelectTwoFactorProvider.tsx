@@ -1,5 +1,5 @@
 import { Button, Header, useAsyncError } from '@wdid/shared';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { twoFactorProvidersAtom } from './twoFactorProvidersAtom';
@@ -25,24 +25,41 @@ const SubHeader = styled.p`
   padding: ${({ theme }) =>
     `0 ${theme.spacing.m} ${theme.spacing.m} ${theme.spacing.m}`};
 `;
-const Provider = styled.div`
+const Provider = styled.div<{ selected: boolean }>`
   margin: 0 ${({ theme }) => `-${theme.spacing.m}`};
+  display: flex;
+  align-items: center;
+  padding: ${({ theme }) => theme.spacing.m};
+  border-bottom: 2px solid ${({ theme }) => theme.palette.background.main};
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  ${({ selected, theme }) =>
+    selected &&
+    `
+    background-color: ${theme.palette.paperHighlight.main};
+    color: ${theme.palette.paperHighlight.contrastText};
+  `}
   & input[type='radio'] {
     display: none;
-    &:checked + label {
-      background-color: ${({ theme }) => theme.palette.paperHighlight.main};
-      color: ${({ theme }) => theme.palette.paperHighlight.contrastText};
-    }
   }
-  & label {
-    padding: ${({ theme }) => theme.spacing.m};
-    border-bottom: 2px solid ${({ theme }) => theme.palette.background.main};
+  &:before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
     display: block;
-    cursor: pointer;
-    &:hover {
-      background-color: ${({ theme }) => theme.palette.paperHighlight.main};
-      color: ${({ theme }) => theme.palette.paperHighlight.contrastText};
-    }
+    border: 4px solid ${({ theme }) => theme.palette.divider.main};
+    background-color: ${({ theme }) => theme.palette.divider.main};
+    margin-right: ${({ theme }) => theme.spacing.m};
+    transition:
+      box-shadow 0.2s ease-in-out,
+      background-color 0.2s ease-in-out;
+    ${({ selected, theme }) =>
+      selected &&
+      `
+      background-color: ${theme.palette.paperHighlight.main};
+      box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
+    `}
   }
 `;
 const ButtonWrapper = styled.div`
@@ -61,6 +78,12 @@ export const SelectTwoFactorProvider = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const userService = useMemo(() => new UserService(), []);
+
+  useEffect(() => {
+    if (selectedProvider === '' && (providers.result?.length ?? 0) > 0) {
+      setSelectedProvider(providers.result![0]);
+    }
+  }, [providers, selectedProvider]);
 
   const submit = async () => {
     try {
@@ -100,7 +123,11 @@ export const SelectTwoFactorProvider = () => {
       <Form>
         <SubHeader>How do you want to verify your login?</SubHeader>
         {providers.result?.map((provider) => (
-          <Provider key={provider}>
+          <Provider
+            key={provider}
+            selected={selectedProvider === provider}
+            onClick={() => setSelectedProvider(provider)}
+          >
             <input
               type="radio"
               id={provider}

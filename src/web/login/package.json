@@ -36,6 +36,7 @@
     "react-app-rewired": "^2.2.1"
   },
   "dependencies": {
-    "qrcode": "^1.5.3"
+    "qrcode": "^1.5.3",
+    "react-toastify": "^10.0.3"
   }
 }

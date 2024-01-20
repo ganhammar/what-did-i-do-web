@@ -1,11 +1,37 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { RecoilRoot, useRecoilValue } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+import { ToastContainer } from 'react-toastify';
 import { AppRoutes } from './AppRoutes';
 import { appTheme, ErrorBoundry, Layout, Loader } from '@wdid/shared';
 import useUser from '../Auth/currentUserSelector';
-import { Suspense } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+
+const StyledToastContainer = styled(ToastContainer)`
+  .Toastify__toast {
+    background: ${({ theme }) => theme.palette.paperHighlight.main};
+    .Toastify__toast-body {
+      color: ${({ theme }) => theme.palette.paperHighlight.contrastText};
+    }
+  }
+  .Toastify__toast--error {
+    .Toastify__progress-bar {
+      background: ${({ theme }) => theme.palette.warning.main};
+    }
+    .Toastify__toast-icon {
+      color: ${({ theme }) => theme.palette.warning.main};
+    }
+  }
+  .Toastify__toast--success {
+    .Toastify__progress-bar {
+      background: ${({ theme }) => theme.palette.success.main};
+    }
+    .Toastify__toast-icon {
+      color: ${({ theme }) => theme.palette.success.main};
+    }
+  }
+`;
 
 function AppLayout() {
   const user = useRecoilValue(useUser);
@@ -34,6 +60,7 @@ export function App() {
       <BrowserRouter>
         <ThemeProvider theme={appTheme}>
           <Suspense fallback={<Loader />}>
+            <StyledToastContainer />
             <AppLayout />
           </Suspense>
         </ThemeProvider>
