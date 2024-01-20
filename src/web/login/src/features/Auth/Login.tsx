@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserService } from '../User/UserService';
 import useUser from './currentUserSelector';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SELECT_TWO_FACTOR_PROVIDER_URL = '/login/select-two-factor-provider';
 
@@ -71,7 +72,8 @@ export function Login() {
           `${SELECT_TWO_FACTOR_PROVIDER_URL}?rememberMe=${rememberMe}&returnUrl=${returnUrl}`
         );
       } else {
-        console.log(response);
+        toast.error('Invalid email or password');
+        setIsLoading(false);
       }
     } catch (error) {
       throwError(error);

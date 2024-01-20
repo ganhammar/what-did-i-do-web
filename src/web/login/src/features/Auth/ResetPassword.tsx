@@ -78,7 +78,7 @@ export const ResetPassword = () => {
           errorTip="At least eight characters"
         />
         <ButtonWrapper>
-          <Link to="/login">Login</Link>
+          <Link to="/login">Back to Login</Link>
           <Button
             color="success"
             onClick={submit}

@@ -1,10 +1,13 @@
 import { Button, Header, TextInput, useAsyncError } from '@wdid/shared';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilRefresher_UNSTABLE } from 'recoil';
 import { UserService } from '../User';
 import useUser from './currentUserSelector';
+import { toast } from 'react-toastify';
+
+const CODE_LENGTH = 6;
 
 const Wrapper = styled.div`
   margin: ${({ theme }) => `${theme.spacing.xl} 0`};
@@ -29,16 +32,21 @@ export const VerifyCode = () => {
   const throwError = useAsyncError();
   const refresh = useRecoilRefresher_UNSTABLE(useUser);
   const [code, setCode] = useState('');
+  const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const userService = useMemo(() => new UserService(), []);
+
+  useEffect(() => {
+    setIsValid(code.length === CODE_LENGTH && /^\d+$/.test(code));
+  }, [code]);
 
   const submit = async () => {
     try {
       setIsLoading(true);
 
       const params = new URLSearchParams(window.location.search);
-      const rememberMe = Boolean(params.get('rememberMe'));
+      const rememberMe = params.get('rememberMe') === 'true';
       const provider = params.get('provider') ?? '';
       const returnUrl = params.get('returnUrl');
 
@@ -49,14 +57,14 @@ export const VerifyCode = () => {
         provider,
       });
 
-      if (response.success) {
+      if (response.success && response.result?.succeeded) {
         if (returnUrl) {
           window.location.href = returnUrl;
         } else {
           refresh();
         }
       } else {
-        console.log(response);
+        toast.error('Invalid code');
       }
 
       setIsLoading(false);
@@ -74,15 +82,15 @@ export const VerifyCode = () => {
           type="text"
           value={code}
           onChange={setCode}
-          hasError={!Boolean(code)}
-          errorTip="Invalid code"
+          hasError={Boolean(code) && !isValid}
+          errorTip="Code must be 6 digits"
         />
         <ButtonWrapper>
-          <Link to="/login">Login</Link>
+          <Link to="/login">Back to Login</Link>
           <Button
             color="success"
             onClick={submit}
-            isDisabled={!Boolean(code)}
+            isDisabled={!isValid}
             isLoading={isLoading}
             isAsync
           >

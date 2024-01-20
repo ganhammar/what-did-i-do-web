@@ -83,7 +83,7 @@ export class UserService extends FetchBase {
   }
 
   async verifyCode(data: VerifyCodeParameters) {
-    return await this.post(`${this.baseUrl}/verifycode`, data);
+    return await this.post<LoginResult>(`${this.baseUrl}/verifycode`, data);
   }
 
   async authenticatorKey() {

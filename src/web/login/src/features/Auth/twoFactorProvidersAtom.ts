@@ -7,7 +7,10 @@ export const twoFactorProvidersAtom = atom({
     key: 'twoFactorProvidersAtom/Default',
     get: async () => {
       const userService = new UserService();
-      return await userService.getTwoFactorProviders();
+      const providers = await userService.getTwoFactorProviders();
+      providers.result = providers.result.sort((a, b) => a.localeCompare(b));
+
+      return providers;
     },
   }),
 });
