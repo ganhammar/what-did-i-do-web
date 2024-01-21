@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Header, TextInput, isEmail, useAsyncError } from '@wdid/shared';
+import {
+  Button,
+  Header,
+  TextInput,
+  isEmail,
+  useAsyncError,
+} from '@wdid/shared';
 import { UserService } from './';
 import { Link } from 'react-router-dom';
 
