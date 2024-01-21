@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextInput, useAsyncError } from '@wdid/shared';
+import { Button, Header, TextInput, useAsyncError } from '@wdid/shared';
 import { useEffect, useState } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -7,10 +7,19 @@ import { accountServiceSelector, accountsSelector } from '.';
 import { currentUserAtom } from '@wdid/shared/src/components/Auth/currentUserAtom';
 import { useNavigate } from 'react-router-dom';
 
+const Wrapper = styled.div`
+  margin: ${({ theme }) => `${theme.spacing.xl} 0`};
+`;
 const Form = styled.form`
+  background-color: ${({ theme }) => theme.palette.paper.main};
+  color: ${({ theme }) => theme.palette.paper.contrastText};
+  border-radius: ${({ theme }) => theme.borderRadius};
   display: flex;
   flex-direction: column;
-  margin-top: ${({ theme }) => theme.spacing.xl};
+  padding: ${({ theme }) => theme.spacing.m};
+`;
+const SubHeader = styled.p`
+  margin: ${({ theme }) => `0 ${theme.spacing.xs} ${theme.spacing.m} ${theme.spacing.xs}`};
 `;
 const Submit = styled(Button)`
   margin-left: auto;
@@ -54,10 +63,10 @@ export function Create() {
   }, [user]);
 
   return (
-    <>
-      <h2>Create Account</h2>
-      <p>Seems like you don't have an account, let's create one!</p>
+    <Wrapper>
+      <Header size="H3">Create Account</Header>
       <Form>
+        <SubHeader>Seems like you don't have an account, let's create one!</SubHeader>
         <TextInput
           title="Name"
           type="text"
@@ -76,6 +85,6 @@ export function Create() {
           Create
         </Submit>
       </Form>
-    </>
+    </Wrapper>
   );
 }

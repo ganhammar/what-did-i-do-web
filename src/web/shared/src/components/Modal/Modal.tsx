@@ -100,7 +100,6 @@ const Window = styled.div<ModalStyleProps>`
   border-radius: 20px;
   box-shadow: ${({ theme }) => theme.shadows[3]};
   padding: ${({ theme, noPadding }) => (noPadding ? 0 : theme.spacing.l)};
-  overflow: hidden;
   opacity: 0;
   ${({ isOpen }) =>
     isOpen &&

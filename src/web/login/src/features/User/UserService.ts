@@ -97,6 +97,6 @@ export class UserService extends FetchBase {
   }
 
   async logout() {
-    return await this.get(`${this.baseUrl}/logout`);
+    return await this.get('/api/login/connect/logout');
   }
 }

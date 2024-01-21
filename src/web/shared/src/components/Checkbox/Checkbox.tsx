@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 const Fieldset = styled.fieldset`
@@ -7,6 +8,7 @@ const Fieldset = styled.fieldset`
   flex-direction: row;
   height: 2rem;
   align-items: center;
+  position: relative;
 `;
 
 const CheckboxElement = styled.input`
@@ -22,7 +24,7 @@ const CheckboxElement = styled.input`
     display: block;
     border-radius: ${({ theme }) => theme.borderRadius};
     cursor: pointer;
-    border: 2px solid ${({ theme }) => theme.palette.divider.main};
+    border: 4px solid ${({ theme }) => theme.palette.divider.main};
     background-color: ${({ theme }) => theme.palette.paper.main};
     box-sizing: border-box;
     color: ${({ theme }) => theme.palette.primary.contrastText};
@@ -31,9 +33,18 @@ const CheckboxElement = styled.input`
       border-color 0.2s;
   }
   &:checked:after {
-    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='2 8 24 24' width='16px' height='16px' fill='white'><path d='M5 16.577l2.194-2.195 5.486 5.484L24.804 7.743 27 9.937l-14.32 14.32z' /></svg>");
+    border-color: ${({ theme }) => theme.palette.primary.main};
     border-color: ${({ theme }) => theme.palette.primary.main};
     background-color: ${({ theme }) => theme.palette.primary.main};
+  }
+  & + svg {
+    display: none;
+    position: absolute;
+    left: 3px;
+    top: 9px;
+  }
+  &:checked + svg {
+    display: block;
   }
 `;
 
@@ -56,6 +67,15 @@ export function Checkbox({ title, isChecked, onChange, position }: Props) {
         checked={isChecked}
         onChange={onChange}
       />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="2 6 24 24"
+        width="16px"
+        height="16px"
+        fill="white"
+      >
+        <path d="M5 16.577l2.194-2.195 5.486 5.484L24.804 7.743 27 9.937l-14.32 14.32z" />
+      </svg>
       <Label>{title}</Label>
     </Fieldset>
   );

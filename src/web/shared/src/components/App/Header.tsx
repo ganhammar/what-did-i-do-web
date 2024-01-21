@@ -145,6 +145,8 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: column;
   text-align: center;
+  overflow: hidden;
+  border-radius: 20px;
 `;
 const LinkStyle = css`
   text-decoration: none;

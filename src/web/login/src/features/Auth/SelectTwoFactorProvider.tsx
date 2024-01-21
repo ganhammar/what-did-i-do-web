@@ -58,7 +58,8 @@ const Provider = styled.div<{ selected: boolean }>`
       selected &&
       `
       background-color: ${theme.palette.paperHighlight.main};
-      box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
+      box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.3);
+      border-color: ${theme.palette.primary.main};
     `}
   }
 `;
