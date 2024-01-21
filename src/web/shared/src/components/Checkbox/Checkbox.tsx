@@ -24,7 +24,7 @@ const CheckboxElement = styled.input`
     display: block;
     border-radius: ${({ theme }) => theme.borderRadius};
     cursor: pointer;
-    border: 4px solid ${({ theme }) => theme.palette.divider.main};
+    border: 2px solid ${({ theme }) => theme.palette.divider.main};
     background-color: ${({ theme }) => theme.palette.paper.main};
     box-sizing: border-box;
     color: ${({ theme }) => theme.palette.primary.contrastText};
@@ -40,7 +40,7 @@ const CheckboxElement = styled.input`
   & + svg {
     display: none;
     position: absolute;
-    left: 3px;
+    left: 2px;
     top: 9px;
   }
   &:checked + svg {

@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useMemo } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
-import { Loader, accessTokenSelector } from '@wdid/shared';
+import { Loader } from '@wdid/shared';
 import { UserService } from '../User';
 import { Login } from '.';
 import currentUserSelector from './currentUserSelector';
@@ -27,8 +27,7 @@ function RenderIfLoggedIn({ children }: AuthProps) {
 
 function Logout() {
   const user = useRecoilValue(currentUserSelector);
-  const refreshUser = useRecoilRefresher_UNSTABLE(currentUserSelector);
-  const refreshAccessToken = useRecoilRefresher_UNSTABLE(accessTokenSelector);
+  const refresh = useRecoilRefresher_UNSTABLE(currentUserSelector);
   const userService = useMemo(() => new UserService(), []);
   const navigate = useNavigate();
 
@@ -37,8 +36,7 @@ function Logout() {
       const response = await userService.logout();
 
       if (response.success) {
-        refreshUser();
-        refreshAccessToken();
+        refresh();
         navigate('/');
       }
     };
@@ -46,7 +44,7 @@ function Logout() {
     if (user) {
       logout();
     }
-  }, [userService, navigate, refreshUser, refreshAccessToken, user]);
+  }, [userService, navigate, refresh, user]);
 
   if (!user) {
     return <Navigate to="/login" />;
