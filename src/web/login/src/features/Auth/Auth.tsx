@@ -10,6 +10,7 @@ import { ResetPassword } from './ResetPassword';
 import { CheckInbox } from './CheckInbox';
 import { SelectTwoFactorProvider } from './SelectTwoFactorProvider';
 import { VerifyCode } from './VerifyCode';
+import { userManager } from '@wdid/shared/src/components/Auth/userManager';
 
 interface AuthProps {
   children: ReactElement;
@@ -34,6 +35,7 @@ function Logout() {
   useEffect(() => {
     const logout = async () => {
       const response = await userService.logout();
+      await userManager.removeUser();
 
       if (response.success) {
         refresh();
