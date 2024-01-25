@@ -108,7 +108,7 @@ export const SelectTwoFactorProvider = () => {
         const returnUrl = params.get('returnUrl');
 
         navigate(
-          `${VERIFY_URL}?rememberMe=${rememberMe}&provider=${selectedProvider}&returnUrl=${returnUrl}`
+          `${VERIFY_URL}?rememberMe=${rememberMe}&provider=${selectedProvider}&returnUrl=${encodeURIComponent(returnUrl ?? '')}`
         );
       }
 

@@ -51,6 +51,8 @@ export function Login() {
 
   const userService = useMemo(() => new UserService(), []);
 
+  console.log(returnUrl);
+
   const submit = async () => {
     try {
       setIsLoading(true);
@@ -69,7 +71,7 @@ export function Login() {
         }
       } else if (response.result?.requiresTwoFactor) {
         navigate(
-          `${SELECT_TWO_FACTOR_PROVIDER_URL}?rememberMe=${rememberMe}&returnUrl=${returnUrl}`
+          `${SELECT_TWO_FACTOR_PROVIDER_URL}?rememberMe=${rememberMe}&returnUrl=${encodeURIComponent(returnUrl ?? '')}`
         );
       } else {
         toast.error('Invalid email or password');
