@@ -5,7 +5,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import { AppRoutes } from './AppRoutes';
 import { appTheme, ErrorBoundry, Layout, Loader } from '@wdid/shared';
-import useUser from '../Auth/currentUserSelector';
+import { currentUserSelector } from '../Auth/currentUserSelector';
 import 'react-toastify/dist/ReactToastify.css';
 
 const StyledToastContainer = styled(ToastContainer)`
@@ -34,7 +34,7 @@ const StyledToastContainer = styled(ToastContainer)`
 `;
 
 function AppLayout() {
-  const user = useRecoilValue(useUser);
+  const user = useRecoilValue(currentUserSelector);
 
   let links = [{ to: '/login/register', title: 'Register', serverSide: false }];
 

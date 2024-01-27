@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 interface TextInputStyleProps {
@@ -95,6 +95,7 @@ interface Props {
   isDisabled?: boolean;
   hasError?: boolean;
   errorTip?: string;
+  autoComplete?: string;
 }
 
 export function TextInput({
@@ -105,6 +106,7 @@ export function TextInput({
   isDisabled,
   hasError,
   errorTip,
+  autoComplete,
 }: Props) {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -131,6 +133,7 @@ export function TextInput({
           isFocused={isFocused}
           hasValue={Boolean(value)}
           hasError={hasError ?? false}
+          autoComplete={autoComplete}
         />
       )}
       {type !== 'textarea' && (
@@ -144,6 +147,7 @@ export function TextInput({
           isFocused={isFocused}
           hasValue={Boolean(value)}
           hasError={hasError ?? false}
+          autoComplete={autoComplete}
         />
       )}
       {errorTip && (

@@ -1,10 +1,10 @@
 import { Button, Header, TextInput, useAsyncError } from '@wdid/shared';
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilRefresher_UNSTABLE } from 'recoil';
 import { UserService } from '../User';
-import useUser from './currentUserSelector';
+import { currentUserSelector } from './currentUserSelector';
 import { toast } from 'react-toastify';
 
 const CODE_LENGTH = 6;
@@ -30,7 +30,8 @@ const ButtonWrapper = styled.div`
 
 export const VerifyCode = () => {
   const throwError = useAsyncError();
-  const refresh = useRecoilRefresher_UNSTABLE(useUser);
+  const navigate = useNavigate();
+  const refresh = useRecoilRefresher_UNSTABLE(currentUserSelector);
   const [code, setCode] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +63,7 @@ export const VerifyCode = () => {
           window.location.href = returnUrl;
         } else {
           refresh();
+          navigate('/login/user');
         }
       } else {
         toast.error('Invalid code');
@@ -84,6 +86,7 @@ export const VerifyCode = () => {
           onChange={setCode}
           hasError={Boolean(code) && !isValid}
           errorTip="Code must be 6 digits"
+          autoComplete="one-time-code"
         />
         <ButtonWrapper>
           <Link to="/login">Back to Login</Link>

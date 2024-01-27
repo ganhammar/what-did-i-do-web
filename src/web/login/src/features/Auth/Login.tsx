@@ -11,7 +11,7 @@ import {
 } from '@wdid/shared';
 import { useNavigate } from 'react-router-dom';
 import { UserService } from '../User/UserService';
-import useUser from './currentUserSelector';
+import { currentUserSelector } from './currentUserSelector';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -39,8 +39,8 @@ const ButtonWrapper = styled.div`
 export function Login() {
   const throwError = useAsyncError();
   const navigate = useNavigate();
-  const user = useRecoilValue(useUser);
-  const refresh = useRecoilRefresher_UNSTABLE(useUser);
+  const user = useRecoilValue(currentUserSelector);
+  const refresh = useRecoilRefresher_UNSTABLE(currentUserSelector);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -50,8 +50,6 @@ export function Login() {
   const returnUrl = params.get('ReturnUrl');
 
   const userService = useMemo(() => new UserService(), []);
-
-  console.log(returnUrl);
 
   const submit = async () => {
     try {
@@ -68,6 +66,7 @@ export function Login() {
           window.location.href = returnUrl;
         } else {
           refresh();
+          navigate('/login/user');
         }
       } else if (response.result?.requiresTwoFactor) {
         navigate(

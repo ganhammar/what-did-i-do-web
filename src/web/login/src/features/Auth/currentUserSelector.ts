@@ -1,7 +1,7 @@
 import { selector } from 'recoil';
 import { UserService } from '../User/UserService';
 
-const currentUserSelector = selector({
+export const currentUserSelector = selector({
   key: 'CurrentUser',
   get: async () => {
     const userService = new UserService();
@@ -11,5 +11,3 @@ const currentUserSelector = selector({
     return response.result;
   },
 });
-
-export default currentUserSelector;

@@ -5,7 +5,7 @@ import {
   isEmail,
   useAsyncError,
 } from '@wdid/shared';
-import useUser from '../Auth/currentUserSelector';
+import { currentUserSelector } from '../Auth/currentUserSelector';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -55,7 +55,7 @@ const Submit = styled(Button)`
 export function Edit() {
   const throwError = useAsyncError();
   const providers = useRecoilValue(twoFactorProvidersAtom);
-  const user = useRecoilValue(useUser);
+  const user = useRecoilValue(currentUserSelector);
   const [email, setEmail] = React.useState<string>(user.email);
   const [password, setPassword] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState(false);

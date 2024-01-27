@@ -4,13 +4,14 @@ import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import { Loader } from '@wdid/shared';
 import { UserService } from '../User';
 import { Login } from '.';
-import currentUserSelector from './currentUserSelector';
+import { currentUserSelector } from './currentUserSelector';
 import { ForgotPassword } from './ForgotPassword';
 import { ResetPassword } from './ResetPassword';
 import { CheckInbox } from './CheckInbox';
 import { SelectTwoFactorProvider } from './SelectTwoFactorProvider';
 import { VerifyCode } from './VerifyCode';
 import { userManager } from '@wdid/shared/src/components/Auth/userManager';
+import { currentUserAtom } from '@wdid/shared/src/components/Auth/currentUserAtom';
 
 interface AuthProps {
   children: ReactElement;
@@ -28,7 +29,8 @@ function RenderIfLoggedIn({ children }: AuthProps) {
 
 function Logout() {
   const user = useRecoilValue(currentUserSelector);
-  const refresh = useRecoilRefresher_UNSTABLE(currentUserSelector);
+  const refreshLogin = useRecoilRefresher_UNSTABLE(currentUserSelector);
+  const refreshApp = useRecoilRefresher_UNSTABLE(currentUserAtom);
   const userService = useMemo(() => new UserService(), []);
   const navigate = useNavigate();
 
@@ -38,7 +40,8 @@ function Logout() {
       await userManager.removeUser();
 
       if (response.success) {
-        refresh();
+        refreshLogin();
+        refreshApp();
         navigate('/');
       }
     };
@@ -46,7 +49,7 @@ function Logout() {
     if (user) {
       logout();
     }
-  }, [userService, navigate, refresh, user]);
+  }, [userService, navigate, refreshLogin, refreshApp, user]);
 
   if (!user) {
     return <Navigate to="/login" />;
