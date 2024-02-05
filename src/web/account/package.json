@@ -34,7 +34,7 @@
     "@types/react-datepicker": "^4.19.5",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.2.1",
-    "recoil-mock": "^0.1.4"
+    "recoil-mock": "^0.1.6"
   },
   "dependencies": {
     "date-fns": "^3.3.1",
